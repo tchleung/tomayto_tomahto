@@ -43,7 +43,7 @@ The dataset was not very balanced, Taiwan has ~3 times more clips than China.
 <p align="center">
     <img src="img/dataset.png"/>
 <p/>
-<br/><br/>
+<br/>
 Monzilla included both validated and invalidated clips in the pack. Generally, the invalidated clips are quiet recordings or trolls playing music. The following is a breakdown of the clip validation:
 
 | Class | Validated | Not Validated |
@@ -51,15 +51,14 @@ Monzilla included both validated and invalidated clips in the pack. Generally, t
 | Taiwan | 48968 | 21249 |
 | China | 16898 | 2571 |
 
-Volunteers who recorded their voice could also submit their age, gender, accent. Unfortunately, some of the metadata were missing. <br/>
-I was mostly concerned with gender balance, because I wanted the model to have an equal opportunity to learn from both male and female voices. The Taiwanese set has a good mix of men and women. In contrast, there were many more audio clips recorded by Chinese men than women.
+Volunteers who recorded their voice could also submit their age, gender, accent. Unfortunately, some of the metadata were missing. I was mostly concerned with gender balance, because I wanted the model to have an equal opportunity to learn from both male and female voices. The Taiwanese set has a good mix of men and women. In contrast, there were many more audio clips recorded by Chinese men than women.
 
 | Class | Male | Female |
 |--------|-----------|-----------|
 | Taiwan | 22091 | 14367 |
 | China | 10962 | 1851 |
 
-Hence, I decided to curate my own balanced dataset. I randomly selected 1851 male and 1851 female audio clips from the validated pool of both Taiwan and China, then split them into train, test and hold-out set with a 8:1:1 ratio.
+Due to the imbalance, I decided to curate a more balanced dataset. I randomly selected 1851 male and 1851 female audio clips from the validated pool of both Taiwan and China, then split them into train, test and hold-out set with a 8:1:1 ratio. 
 
 # **Constructing a CNN**
 ## **Pre-processing**
@@ -71,27 +70,27 @@ Most people have probably seen a waveform before. It is plotting amplitude over 
 <p align="center">
     <img src="img/waveform.png"/>
 <p/>
-<br/><br/>
+<br/>
 What is missing from a waveform is the frequency (think of 'pitch'). This is where a spectrogram comes in. X axis is time, Y axis is frequency. Color denotes the amplitude.
 <br/>
 <p align="center">
     <img src="img/spec.png"/>
 <p/>
-<br/><br/>
+<br/>
 Another form of presentation is the Mel-frequency cepstral coefficients (MFCC)
 <br/>
 <p align="center">
-    <img src="img/mfcc"/>
+    <img src="img/mfcc.png"/>
 <p/>
-<br/><br/>
-As you may suspect, audio recognition can actually be dealt with as an image recognition problem! So I turned all the audio clips into 128x256 shaped mel-scaled spectrograms, padded/trimmed the audio clips that are either too short or too long.
+<br/>
+As you may suspect, audio recognition is actually an image recognition problem! Before I could train them in a CNN, I turned all the audio clips into mel-scaled spectrograms, padded/trimmed the audio clips that are either too short/long. The results were identically-shaped images.
 
 ### **Outline**
 <br/>
 <p align="center">
     <img src="img/preprocess_pipeline.png"/>
 <p/>
-<br/><br/>
+<br/>
 
 ## **CNN Structure**
 (See details in nb/03_Modeling)<br/>
@@ -122,31 +121,42 @@ I was able to achieve validation accuracy at ~90%. Tuning the layers and their r
 ## **Flask**
 I built a flask app serving the tensorflow model on an EC2 instance. You can check it out [HERE](https://13.52.56.68/). The code base is maintained in [this repo](https://github.com/tchleung/tomayto_tomahto_flask/).
 <br/><br/>
-You can record a sentence (~3 minutes) using the voice recorder and save it as a .wav file
+You can record a sentence (~3 minutes) using the voice recorder and save it as a .wav file. Upload the recording to the server, and it will show you the prediction. Screenshots are taken running on Firefox on Ubuntu.
 <br/>
 <p align="center">
-    <img src="img/TBA"/>
+    <img src="img/flask_01.png" width=600/>
+    <img src="img/flask_02.png" width=600/>
 <p/>
 <br/>
-Upload the recording to the server, and it will show you the prediction
-<br/>
+
+Screenshots of it running in Firefox Mobile on a Pixel 3a
 <p align="center">
-    <img src="img/TBA"/>
-<p/>
-<br/>
-It worked on my phone as well
-<p align="center">
-   <img src="img/TBA"/>
-   <img src="img/TBA"/>
+   <img src="img/flask_03.png" width=300/>
+   <img src="img/flask_04.png" width=300/>
 <p/>
 
 ## **Conclusion**
-<br/><br/>
 One caveat. Due to the self-policing nature of the common voice project, there is no assurance that all the metadata are correct. I manually played a dozen samples and the voices did match the gender and the language, so it gives me a slight comfort that I have some good data.
-<br/><br/>
 
 ## **Future Work**
+Other use of the dataset:
+- End-to-end speech-to-text
+- Combine other languages for a multi-class classification
+<br/>
+<br/>
+Improvement on the current model:
+- Use transfer learning to see if it improves accuarcy
+- Trim the clips based on voice activity
+- Use MFCC instead instead of mel-spectrogram
+<br/>
+<br/>
+Flask improvement:
+- Customize front-end
+- Add functionality for users to mark if the prediction is right or wrong, and save the recording, in order to accumulate even more data to improve the model
 
 ## **Credit**
-
-
+Audio data from Mozilla Firefox (https://voice.mozilla.org/en)
+<br/>
+Flask app recorder from Matt Diamond's Recorder JS (https://github.com/mattdiamond/Recorderjs)
+<br/>
+Flask front-end design is modified from Addpipe's demo of Recorder JS (https://github.com/addpipe/simple-web-audio-recorder-demo)
