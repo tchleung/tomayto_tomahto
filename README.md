@@ -48,7 +48,6 @@ Monzilla included both validated and unvalidated clips in the pack. Generally, t
 <br/>
 <p align="center">
     <img src="img/valid_tw.png" width=400/>
-    <img src="img/valid_cn.png" width=400/>
 <p/>
 <br/>
 
