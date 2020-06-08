@@ -99,16 +99,16 @@ I experimented with many different structures, the following structure with 3 se
 | Layers | Output Shape | # Parameter |
 |--------|--------------|-------------|
 | Conv2D | 128, 256, 32 | 832 |
-| MaxPooling2D | 64, 256, 32 | 0 |
-| Dropout | 64, 256, 32 | 0 |
-| Conv2D | 64, 128, 64 | 51264 |
-| MaxPooling2D | 32, 64, 64 | 0 |
-| Dropout | 32, 64, 64 | 0 |
-| Conv2D | 32, 64, 128 | 204928 |
-| MaxPooling2D | 16, 32, 128 | 0 |
-| Dropout | 16, 32, 128 | 0 |
-| Flatten | 65536 | 0 |
-| Dense | 256 | 16777472 |
+| MaxPooling2D | 42, 85, 32 | 0 |
+| Dropout | 42, 85, 32 | 0 |
+| Conv2D | 42, 85, 64 | 51264 |
+| MaxPooling2D | 14, 28, 64 | 0 |
+| Dropout | 14, 28, 64 | 0 |
+| Conv2D | 14, 28, 128 | 204928 |
+| MaxPooling2D | 4, 9, 128 | 0 |
+| Dropout | 4, 9, 128 | 0 |
+| Flatten | 4608 | 0 |
+| Dense | 256 | 1179904 |
 | Dense | 2 | 514 |
 
 Input shape: 5924 x 128 x 256
@@ -116,7 +116,39 @@ Input shape: 5924 x 128 x 256
 Training was done on an EC2 GPU instance over 100 epochs
 
 ## **Results**
-I was able to achieve validation accuracy at ~90%. Tuning the layers and their respective parameters did not yield any marginal improvement.
+
+### Base CNN model
+I started with a simple set-up with 2 Conv-Pool layers, validation accuracy converges to 86% after 70 epochs. Accuracy against the hold-out set was 89.19%.
+<br/>
+<p align="center">
+    <img src="img/base_cnn_acc.png" width=300/>
+    <img src="img/base_cnn_loss.png" width=300/>
+<p/>
+
+### Final CNN Model
+In order to prevent overfit, drop-out layers were added to the structure, and it helped reach 91% validation accuracy against the hold-out set. Here I have learned that blindly adding epochs do not always improve the model. It converged to the highest validation accuracy early-on in the training process.
+<br/>
+<p align="center">
+    <img src="img/final_cnn_acc.png" width=300/>
+    <img src="img/final_cnn_loss.png" width=300/>
+<p/>
+<br/>
+
+| Model | Hold-out Accuracy |
+|--------|--------------|
+| Base | 89.19% |
+| Final | 91.35% |
+
+<p align="center">
+    <img src="img/confusion_matrix.png" width=400/>
+<p/>
+
+The best model had fairly great precision and recall rate
+| Metric | Rate |
+|--------|--------------|
+| Recall | 88.9% |
+| Precision | 93.4% |
+
 
 ## **Flask**
 I built a flask app serving the tensorflow model on an EC2 instance. You can check it out [HERE](https://13.52.56.68/). The code base is maintained in [this repo](https://github.com/tchleung/tomayto_tomahto_flask/).
