@@ -41,22 +41,25 @@ Data obtained from the [Mozilla Common Voice](https://voice.mozilla.org/en) proj
 The dataset was not very balanced, Taiwan has ~3 times more clips than China.
 <br/>
 <p align="center">
-    <img src="img/dataset.png"/>
+    <img src="img/dataset.png" width=400/>
 <p/>
 <br/>
 Monzilla included both validated and unvalidated clips in the pack. Generally, the unvalidated clips are quiet recordings or trolls playing music. The following is a breakdown of the clip validation:
-
-| Class | Validated | Not Validated |
-|--------|----------------|------------|  
-| Taiwan | 48968 | 21249 |
-| China | 16898 | 2571 |
+<br/>
+<p align="center">
+    <img src="img/valid_tw.png" width=400/>
+    <img src="img/valid_cn.png" width=400/>
+<p/>
+<br/>
 
 Volunteers who recorded their voice could also submit their age, gender, accent. Unfortunately, some of the metadata were missing. I was mostly concerned with gender balance, because I wanted the model to have an equal opportunity to learn from both male and female voices. The Taiwanese set has a good mix of men and women. In contrast, there were many more audio clips recorded by Chinese men than women.
 
-| Class | Male | Female |
-|--------|-----------|-----------|
-| Taiwan | 22091 | 14367 |
-| China | 10962 | 1851 |
+<br/>
+<p align="center">
+    <img src="img/gender_tw.png" width=400/>
+    <img src="img/gender_cn.png" width=400/>
+<p/>
+<br/>
 
 Due to the imbalance, I decided to curate a more balanced dataset. I randomly selected 1851 male and 1851 female audio clips from the validated pool of both Taiwan and China, then split them into train, test and hold-out sets with a 8:1:1 ratio. 
 
