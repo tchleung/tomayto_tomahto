@@ -37,7 +37,7 @@ Can a machine do it better? As a data scientist, I have two goals for this proje
 Data obtained from the [Mozilla Common Voice](https://voice.mozilla.org/en) project, a crowd-sourced database aimed to open source speech recognition. Volunteers can visit the website and record themselves reading short sentences in their language. Other users can validate the integrity of the recording. I downloaded the Chinese (Taiwan) dataset and the Chinese (China) dataset. See the sample folder for two sample clips.
 
 ## **EDA**
-(See details in nb/01_EDA)<br/>
+(See details in nb/01_EDA; executable script in src/curate_data.py)<br/>
 The dataset was not very balanced, Taiwan has ~3 times more clips than China.
 <br/>
 <p align="center">
@@ -62,7 +62,7 @@ Due to the imbalance, I decided to curate a more balanced dataset. I randomly se
 
 # **Constructing a CNN**
 ## **Pre-processing**
-(See details in nb/02_Preprocessing)<br/>
+(See details in nb/02_Preprocessing; executable script in src/preprocessing.py)<br/>
 You may be wondering why convolutional neural networks are chosen for this task. Let's first look at how we can visualize sound.
 <br/><br/>
 Most people have probably seen a waveform before. It is plotting amplitude over time (you can think of amplitude as loudness)
@@ -93,7 +93,7 @@ As you may suspect, audio recognition is actually an image recognition problem! 
 <br/>
 
 ## **CNN Structure**
-(See details in nb/03_Modeling)<br/>
+(See details in nb/03_Modeling; executable script in src/cnn.py)<br/>
 I experimented with many different structures, the following structure with 3 sets of Conv-Pool-Dropout gave the highest accuracy
 
 | Layers | Output Shape | # Parameter |
