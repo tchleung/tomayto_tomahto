@@ -209,4 +209,4 @@ Flask app recorder from Matt Diamond's Recorder JS (https://github.com/mattdiamo
 Flask front-end design is modified from Addpipe's demo of Recorder JS (https://github.com/addpipe/simple-web-audio-recorder-demo)
 <br/>
 <br/>
-Special thanks to g119 for the awesome memories, and [Unit-00](https://github.com/unit-00) for his continued support through the course.
+Special thanks to g119 for the awesome memories, and Min aka [Unit-00](https://github.com/unit-00) for his continued support with all my projects.
