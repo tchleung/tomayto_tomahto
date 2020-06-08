@@ -116,7 +116,7 @@ Input shape: 5924 x 128 x 256
 Training was done on an EC2 GPU instance over 100 epochs
 
 ## **Results**
-I was able to achieve validation accuracy at ~90%. Tuning the layers and their respective parameters did not yield any marginal improvement. I didn't quite expect the accuracy given the data. 
+I was able to achieve validation accuracy at ~90%. Tuning the layers and their respective parameters did not yield any marginal improvement.
 
 ## **Flask**
 I built a flask app serving the tensorflow model on an EC2 instance. You can check it out [HERE](https://13.52.56.68/). The code base is maintained in [this repo](https://github.com/tchleung/tomayto_tomahto_flask/).
@@ -128,7 +128,6 @@ You can record a sentence (~3 minutes) using the voice recorder and save it as a
     <img src="img/flask_02.png" width=600/>
 <p/>
 <br/>
-
 Screenshots of it running in Firefox Mobile on a Pixel 3a
 <p align="center">
    <img src="img/flask_03.png" width=300/>
@@ -136,23 +135,30 @@ Screenshots of it running in Firefox Mobile on a Pixel 3a
 <p/>
 
 ## **Conclusion**
-One caveat. Due to the self-policing nature of the common voice project, there is no assurance that all the metadata are correct. I manually played a dozen samples and the voices did match the gender and the language, so it gives me a slight comfort that I have some good data.
+I tested the app with multiple Mandarin speakers. The result is generally accurate but it depends on the sentence that is spoken. I would imagine there are certain words that highlights the phonetic difference that model may not have trained on. A more controlled environment would be needed for that.
+<br/>
+<br/>
+So what does this teach us? The same process can be replicated and expanded to multiple languages, accents, even genders and ages. There are many use cases for such technique. For example, we could use it to generate metadata of a user. A voice-activated smart device can return more personalized content based on someone's accent; imagine if your father from Boston is using your Alexa to check the NFL score, and it talks about the Patriots first. Also, it could be used to tag a video or audio. Say Youtube could automatically tag the language or geography of any given upload. It could also be used to improve speech synthesis, perhaps in the future Google Assistant can speak with a thick Southern accent, how cool would that be?
+<br/>
+<br/>
+Due to the self-policing nature of the common voice project, there is no assurance that all the metadata are correct. I was quite worried that many of the clips would be internet trolls, but I played a dozen samples and the voices did match the gender and the language, so it did give me some comfort that the data is somewhat clean. Overall, I am very satisfied with the outcome of the CNN model and the app.
 
 ## **Future Work**
-Other use of the dataset:
-- End-to-end speech-to-text
-- Combine other languages for a multi-class classification
+Other use of the dataset:<br/>
+-- End-to-end speech-to-text<br/>
+-- Combine other languages for a multi-class classification
 <br/>
 <br/>
-Improvement on the current model:
-- Use transfer learning to see if it improves accuarcy
-- Trim the clips based on voice activity
-- Use MFCC instead instead of mel-spectrogram
+Improvement on the current model:<br/>
+-- Use transfer learning to see if it improves accuarcy<br/>
+-- Automatically trim the clips based on voice activity<br/>
+-- Augment the audio files<br/>
+-- Use MFCC instead instead of mel-spectrogram
 <br/>
 <br/>
-Flask improvement:
-- Customize front-end
-- Add functionality for users to mark if the prediction is right or wrong, and save the recording, in order to accumulate even more data to improve the model
+Flask improvement:<br/>
+-- Further customization of the front-end<br/>
+-- Add functionality for users to mark if the prediction is right or wrong, and save the recording, in order to accumulate even more data to improve the model
 
 ## **Credit**
 Audio data from Mozilla Firefox (https://voice.mozilla.org/en)
