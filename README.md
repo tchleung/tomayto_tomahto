@@ -21,7 +21,8 @@ Language Classification - Audio Processing with Convolution Neural Network
 5. [Conclusion](#conclusion)
 6. [Flask](#flask)
 7. [Future work](#future-work)
-8. [Credits](#credits)
+8. [Tech used](#tech)
+9. [Credits](#credits)
 <!--te-->
 
 ## **Background and Motivation**
@@ -195,9 +196,17 @@ Flask improvement:<br/>
 -- Further customization of the front-end<br/>
 -- Add functionality for users to mark if the prediction is right or wrong, and save the recording, in order to accumulate even more data to improve the model
 
-## **Credit**
-Audio data from Mozilla Firefox (https://voice.mozilla.org/en)
+## **Tech**
+<p align="center">
+   <img src="img/tech.png" width=400/>
+<p/>
+
+## **Credits**
+Audio data from Mozilla Common Voice project (https://voice.mozilla.org/en)
 <br/>
 Flask app recorder from Matt Diamond's Recorder JS (https://github.com/mattdiamond/Recorderjs)
 <br/>
 Flask front-end design is modified from Addpipe's demo of Recorder JS (https://github.com/addpipe/simple-web-audio-recorder-demo)
+<br/>
+<br/>
+Special thanks to g119 for the awesome memories, and [Unit-00](https://github.com/unit-00) for his continued support through the course.
