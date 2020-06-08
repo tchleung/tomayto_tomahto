@@ -37,7 +37,7 @@ Can a machine do it better? As a data scientist, I have two goals for this proje
 Data obtained from the [Mozilla Common Voice](https://voice.mozilla.org/en) project, a crowd-sourced database aimed to open source speech recognition. Volunteers can visit the website and record themselves reading short sentences in their language. Other users can validate the integrity of the recording. I downloaded the Chinese (Taiwan) dataset and the Chinese (China) dataset. See the sample folder for two sample clips.
 
 ## **EDA**
-(See details in nb/01_EDA; executable script in src/curate_data.py)<br/>
+(See details in nb/01_EDA)<br/>
 The dataset was not very balanced, Taiwan has ~3 times more clips than China.
 <br/>
 <p align="center">
@@ -48,6 +48,7 @@ Monzilla included both validated and unvalidated clips in the pack. Generally, t
 <br/>
 <p align="center">
     <img src="img/valid_tw.png" width=400/>
+    <img src="img/valid_cn.png" width=400/>
 <p/>
 <br/>
 
@@ -60,7 +61,7 @@ Volunteers who recorded their voice could also submit their age, gender, accent.
 <p/>
 <br/>
 
-Due to the imbalance, I decided to curate a more balanced dataset. I randomly selected 1851 male and 1851 female audio clips from the validated pool of both Taiwan and China, then split them into train, test and hold-out sets with a 8:1:1 ratio. 
+Due to the imbalance, I decided to curate a more balanced dataset. I randomly selected 1851 male and 1851 female audio clips from the validated pool of both Taiwan and China, then split them into train, test and hold-out sets with a 8:1:1 ratio. See the executable script in src/curate_data.py.
 
 # **Constructing a CNN**
 ## **Pre-processing**
