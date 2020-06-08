@@ -19,43 +19,40 @@ Language Classification - Audio Processing with Convolution Neural Network
     * [CNN Structure](#cnn-structure)
     * [Results](#results)
 5. [Conclusion](#conclusion)
-6. [Future work](#future-work)
-7. [Credits](#credits)
+6. [Flask](#flask)
+7. [Future work](#future-work)
+8. [Credits](#credits)
 <!--te-->
 
 ## **Background and Motivation**
-There are many different languages, dialects, and accents in the world. Someone from the American South speaks quite differently from a New Yorker and a British person ("Tomayto, Tomahto"), although the three groups of people are all speaking English.
+A quick way to tell apart an American from a British person is to have them pronounce the word "tomato". Although they both speak English, their pronounciation is different (aka "accent"). The same applies to Mandarin Chinese as well. You can generally distinguish if someone is from Beijing or Shanghai by their accent. However, it only applies if you are very familiar with the language itself.
 <br/><br/>
-Just like English, Mandarin Chinese also has many different variations. A person from Beijing can probably tell if he/she is speaking to someone from Shanghai, Hong Kong, or Taiwan, even though they are all speaking Chinese.
+I was born and raised in Hong Kong, where we were taught three languages in school (Cantonese, English and Mandarin Chinese). However, Mandarin was not a language that I got to very often in our day-to-day lives. After I moved to the US, my Mandarin has seemingly improved as I have made friends with many Mandarin-speakers from Mainland China and Taiwan, but it is still quite difficult for me to tell apart their accent sometimes.
 <br/><br/>
-<p align="center">
-<img src="https://www.sinologyinstitute.com/sites/default/files/illustration_0.png" width=550>
-<p/>
-<br/><br/>
-I was born and raised in Hong Kong, where we were taught three languages in school (Cantonese, English and Mandarin Chinese). However, Mandarin was not a language that was widely used in our day-to-day lives. After I moved to the US, throughout college and in my adult life, I have made friends with a number of Mandarin-speakers from both Mainland China and Taiwan. My Mandarin has gotten better but it is still quite difficult for me to tell apart the accent sometimes.
-<br/><br/>
-As a data scientist, I have two goals for this project:
-1. Train a CNN to classify the audio clip between Mainland Chinese and Taiwanese
-2. Use the model to guess the origin of the Mandarin-speakers around me
+Can a machine do it better? As a data scientist, I have two goals for this project:
+1. Train a CNN to classify whether a given Mandarin speaker is from Mainland China or Taiwan
+2. Build a working application to serve the model and make predictions in real time
 
 ## **Data**
-Data obtained from the [Mozilla Common Voice](https://voice.mozilla.org/en) project, a crowd-sourced database aimed to open source speech recognition. You can volunteer to record a short sentence of the language you choose, and you can also volunteer to validate the recordings of other users. I combined the Chinese (Taiwan) dataset with the Chinese (China) dataset.
+Data obtained from the [Mozilla Common Voice](https://voice.mozilla.org/en) project, a crowd-sourced database aimed to open source speech recognition. Volunteers can visit the website and record themselves reading short sentences in their language. Other users can validate the integrity of the recording. I downloaded the Chinese (Taiwan) dataset and the Chinese (China) dataset. See the sample folder for two sample clips.
 
 ## **EDA**
+(See details in nb/01_EDA)<br/>
 The dataset was not very balanced, Taiwan has ~3 times more clips than China.
 <br/>
 <p align="center">
-    <img src="img/TBA"/>
+    <img src="img/dataset.png"/>
 <p/>
 <br/><br/>
-The dataset contained both validated and invalidated clips. To understand what it means, I volunteered to validate some Chinese audio clips, and came across several quiet recordings, trolls playing loud music, or people speaking a totally different language.
+Monzilla included both validated and invalidated clips in the pack. Generally, the invalidated clips are quiet recordings or trolls playing music. The following is a breakdown of the clip validation:
 
 | Class | Validated | Not Validated |
 |--------|----------------|------------|  
 | Taiwan | 48968 | 21249 |
 | China | 16898 | 2571 |
 
-Volunteers who recorded their voice could also submit their age, gender, accent. Unfortunately, some of the metadata were missing. I was mostly concerned with gender balance. Taiwanese set has a good mix of men and women. In contrast, there were many more audio clips recorded by Chinese men than women.
+Volunteers who recorded their voice could also submit their age, gender, accent. Unfortunately, some of the metadata were missing. <br/>
+I was mostly concerned with gender balance, because I wanted the model to have an equal opportunity to learn from both male and female voices. The Taiwanese set has a good mix of men and women. In contrast, there were many more audio clips recorded by Chinese men than women.
 
 | Class | Male | Female |
 |--------|-----------|-----------|
@@ -66,36 +63,38 @@ Hence, I decided to curate my own balanced dataset. I randomly selected 1851 mal
 
 # **Constructing a CNN**
 ## **Pre-processing**
+(See details in nb/02_Preprocessing)<br/>
 You may be wondering why covolutional neural network is chosen for this task. Let's first look at how we can visualize sound.
-
+<br/><br/>
 Most people have probably seen a waveform before. It is plotting amplitude over time (you can think of amplitude as loudness)
 <br/>
 <p align="center">
-    <img src="img/TBA"/>
+    <img src="img/waveform.png"/>
 <p/>
 <br/><br/>
 What is missing from a waveform is the frequency (think of 'pitch'). This is where a spectrogram comes in. X axis is time, Y axis is frequency. Color denotes the amplitude.
 <br/>
 <p align="center">
-    <img src="img/TBA"/>
+    <img src="img/spec.png"/>
 <p/>
 <br/><br/>
 Another form of presentation is the Mel-frequency cepstral coefficients (MFCC)
 <br/>
 <p align="center">
-    <img src="img/TBA"/>
+    <img src="img/mfcc"/>
 <p/>
 <br/><br/>
-As you may suspect, audio recognition can actually be dealt with as an image recognition problem! So I turned all the audio clips into 128x256 shaped mel-scaled spectrograms, padded/trimmed the audio clips that are either too short or too long
+As you may suspect, audio recognition can actually be dealt with as an image recognition problem! So I turned all the audio clips into 128x256 shaped mel-scaled spectrograms, padded/trimmed the audio clips that are either too short or too long.
 
 ### **Outline**
 <br/>
 <p align="center">
-    <img src="img/TBA"/>
+    <img src="img/preprocess_pipeline.png"/>
 <p/>
 <br/><br/>
 
 ## **CNN Structure**
+(See details in nb/03_Modeling)<br/>
 I experimented with many different structures, the following structure with 3 sets of Conv-Pool-Dropout gave the highest accuracy
 
 | Layers | Output Shape | # Parameter |
@@ -114,8 +113,32 @@ I experimented with many different structures, the following structure with 3 se
 | Dense | 2 | 514 |
 
 Input shape: 5924 x 128 x 256
+<br/><br/>
+Training was done on an EC2 GPU instance over 100 epochs
 
 ## **Results**
+I was able to achieve validation accuracy at ~90%. Tuning the layers and their respective parameters did not yield any marginal improvement. I didn't quite expect the accuracy given the data. 
+
+## **Flask**
+I built a flask app serving the tensorflow model on an EC2 instance. You can check it out [HERE](https://13.52.56.68/). The code base is maintained in [this repo](https://github.com/tchleung/tomayto_tomahto_flask/).
+<br/><br/>
+You can record a sentence (~3 minutes) using the voice recorder and save it as a .wav file
+<br/>
+<p align="center">
+    <img src="img/TBA"/>
+<p/>
+<br/>
+Upload the recording to the server, and it will show you the prediction
+<br/>
+<p align="center">
+    <img src="img/TBA"/>
+<p/>
+<br/>
+It worked on my phone as well
+<p align="center">
+   <img src="img/TBA"/>
+   <img src="img/TBA"/>
+<p/>
 
 ## **Conclusion**
 <br/><br/>
