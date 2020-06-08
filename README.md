@@ -25,9 +25,9 @@ Language Classification - Audio Processing with Convolution Neural Network
 <!--te-->
 
 ## **Background and Motivation**
-A quick way to tell apart an American from a British person is to have them pronounce the word "tomato". Although they both speak English, their pronounciation is different (aka "accent"). The same applies to Mandarin Chinese as well. You can generally distinguish if someone is from Beijing or Shanghai by their accent. However, it only applies if you are very familiar with the language itself.
+A quick way to tell apart an American from a British person is to have them pronounce the word "tomato". Although they both speak English, their pronunciation is different (aka "accent"). The same applies to Mandarin Chinese as well. You can generally distinguish if someone is from Beijing or Shanghai by their accent. However, it only applies if you are very familiar with the language itself.
 <br/><br/>
-I was born and raised in Hong Kong, where we were taught three languages in school (Cantonese, English and Mandarin Chinese). However, Mandarin was not a language that I got to very often in our day-to-day lives. After I moved to the US, my Mandarin has seemingly improved as I have made friends with many Mandarin-speakers from Mainland China and Taiwan, but it is still quite difficult for me to tell apart their accent sometimes.
+I was born and raised in Hong Kong, where we were taught three languages in school (Cantonese, English and Mandarin Chinese). However, Mandarin was not a language that I got to use very often in our day-to-day lives. After I moved to the US, my Mandarin has seemingly improved as I have made friends with many Mandarin-speakers from Mainland China and Taiwan, but it is still quite difficult for me to tell apart their accent sometimes.
 <br/><br/>
 Can a machine do it better? As a data scientist, I have two goals for this project:
 1. Train a CNN to classify whether a given Mandarin speaker is from Mainland China or Taiwan
@@ -44,7 +44,7 @@ The dataset was not very balanced, Taiwan has ~3 times more clips than China.
     <img src="img/dataset.png"/>
 <p/>
 <br/>
-Monzilla included both validated and invalidated clips in the pack. Generally, the invalidated clips are quiet recordings or trolls playing music. The following is a breakdown of the clip validation:
+Monzilla included both validated and unvalidated clips in the pack. Generally, the unvalidated clips are quiet recordings or trolls playing music. The following is a breakdown of the clip validation:
 
 | Class | Validated | Not Validated |
 |--------|----------------|------------|  
@@ -58,12 +58,12 @@ Volunteers who recorded their voice could also submit their age, gender, accent.
 | Taiwan | 22091 | 14367 |
 | China | 10962 | 1851 |
 
-Due to the imbalance, I decided to curate a more balanced dataset. I randomly selected 1851 male and 1851 female audio clips from the validated pool of both Taiwan and China, then split them into train, test and hold-out set with a 8:1:1 ratio. 
+Due to the imbalance, I decided to curate a more balanced dataset. I randomly selected 1851 male and 1851 female audio clips from the validated pool of both Taiwan and China, then split them into train, test and hold-out sets with a 8:1:1 ratio. 
 
 # **Constructing a CNN**
 ## **Pre-processing**
 (See details in nb/02_Preprocessing)<br/>
-You may be wondering why covolutional neural network is chosen for this task. Let's first look at how we can visualize sound.
+You may be wondering why convolutional neural networks are chosen for this task. Let's first look at how we can visualize sound.
 <br/><br/>
 Most people have probably seen a waveform before. It is plotting amplitude over time (you can think of amplitude as loudness)
 <br/>
@@ -135,10 +135,10 @@ Screenshots of it running in Firefox Mobile on a Pixel 3a
 <p/>
 
 ## **Conclusion**
-I tested the app with multiple Mandarin speakers. The result is generally accurate but it depends on the sentence that is spoken. I would imagine there are certain words that highlights the phonetic difference that model may not have trained on. A more controlled environment would be needed for that.
+I tested the app with multiple Mandarin speakers. The result is generally accurate but it depends on the sentence that is spoken. I would imagine that there are certain words that highlight the phonetic difference, and the model may not have trained on them. A more controlled environment would be needed for that.
 <br/>
 <br/>
-So what does this teach us? The same process can be replicated and expanded to multiple languages, accents, even genders and ages. There are many use cases for such technique. For example, we could use it to generate metadata of a user. A voice-activated smart device can return more personalized content based on someone's accent; imagine if your father from Boston is using your Alexa to check the NFL score, and it talks about the Patriots first. Also, it could be used to tag a video or audio. Say Youtube could automatically tag the language or geography of any given upload. It could also be used to improve speech synthesis, perhaps in the future Google Assistant can speak with a thick Southern accent, how cool would that be?
+So what does this teach us? The same process can be replicated and expanded to multiple languages, accents, even genders and ages. There are many use cases for such techniques. For example, we could use it to generate metadata of a user. A voice-activated smart device can return more personalized content based on someone's accent; imagine if your father from Boston is using your Alexa to check the NFL score, and it talks about the Patriots first. Also, it could be used to tag a video or audio. Say Youtube could automatically tag the language or geography of any given upload. It could also be used to improve speech synthesis, perhaps in the future Google Assistant can speak with a thick Southern accent, how cool would that be?
 <br/>
 <br/>
 Due to the self-policing nature of the common voice project, there is no assurance that all the metadata are correct. I was quite worried that many of the clips would be internet trolls, but I played a dozen samples and the voices did match the gender and the language, so it did give me some comfort that the data is somewhat clean. Overall, I am very satisfied with the outcome of the CNN model and the app.
@@ -150,7 +150,7 @@ Other use of the dataset:<br/>
 <br/>
 <br/>
 Improvement on the current model:<br/>
--- Use transfer learning to see if it improves accuarcy<br/>
+-- Use transfer learning to see if it improves accuracy<br/>
 -- Automatically trim the clips based on voice activity<br/>
 -- Augment the audio files<br/>
 -- Use MFCC instead instead of mel-spectrogram
