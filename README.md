@@ -1,5 +1,5 @@
 # Tomayto, Tomahto
-Language Classification - Audio Processing with Convolution Neural Network
+Speech Recognition with Convolutional Neural Network
 <br/>
 *By Tom Leung*
 
@@ -155,7 +155,7 @@ The best model had fairly great precision and recall rate
 
 
 ## **Flask**
-I built a flask app serving the tensorflow model on an EC2 instance. You can check it out [HERE](https://13.52.56.68/). The code base is maintained in [this repo](https://github.com/tchleung/tomayto_tomahto_flask/).
+I built a flask app serving the tensorflow model deployed on Heroku. You can check it out [HERE](https://tomayto-tomahto.herokuapp.com/). The code base is maintained in [this repo](https://github.com/tchleung/tomayto_tomahto_flask/).
 <br/><br/>
 You can record a sentence (~3 minutes) using the voice recorder and save it as a .wav file. Upload the recording to the server, and it will show you the prediction. Screenshots are taken running on Firefox on Ubuntu.
 <br/>
