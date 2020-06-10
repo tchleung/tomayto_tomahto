@@ -7,7 +7,7 @@ Speech Recognition with Convolutional Neural Network
 <img src='https://reasoningwithvolcanoes.files.wordpress.com/2019/09/aboutusbanner.png'/>
 <p/>
 
-#### ![Click here](TBD) for a 3-minute summary presentation 
+#### See [here](https://youtu.be/QeQvpKT1ZaM) for a 3-minute video presentation on youtube. Slide deck available [here](presentation.pdf). Web demo is [here](https://tomayto-tomahto.herokuapp.com/).
 
 # Table of Contents
 <!--ts-->
@@ -19,7 +19,7 @@ Speech Recognition with Convolutional Neural Network
     * [CNN Structure](#cnn-structure)
     * [Results](#results)
 5. [Conclusion](#conclusion)
-6. [Flask](#flask)
+6. [Web demo](#web-demo)
 7. [Future work](#future-work)
 8. [Tech used](#tech)
 9. [Credits](#credits)
@@ -154,7 +154,7 @@ The best model had fairly great precision and recall rate
 | Precision | 93.4% |
 
 
-## **Flask**
+## **Web demo**
 I built a flask app serving the tensorflow model deployed on Heroku. You can check it out [HERE](https://tomayto-tomahto.herokuapp.com/). The code base is maintained in [this repo](https://github.com/tchleung/tomayto_tomahto_flask/).
 <br/><br/>
 You can record a sentence (~3 minutes) using the voice recorder and save it as a .wav file. Upload the recording to the server, and it will show you the prediction. Screenshots are taken running on Firefox on Ubuntu.
